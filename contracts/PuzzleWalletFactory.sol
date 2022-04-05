@@ -6,7 +6,7 @@ import './Level.sol';
 import './PuzzleWallet.sol';
 
 contract PuzzleWalletFactory is Level {
-
+  address public proxyAd;
   function createInstance(address /*_player*/) override public payable returns (address) {
     require(msg.value ==  0.001 ether, "Must send 0.001 ETH to create instance");
 
@@ -22,6 +22,7 @@ contract PuzzleWalletFactory is Level {
     instance.addToWhitelist(address(this));
     instance.deposit{ value: msg.value }();
 
+    proxyAd = address(proxy);
     return address(proxy);
   }
 
